@@ -1,0 +1,10 @@
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: "DNA") do |sheet|
+  # Create the header row
+  sheet.add_row ["Seq", "A","C","G","T"]
+  # Create entries for each item
+  @dna_array.each do |d|
+    sheet.add_row [d, d.count('a'), d.count('c'), d.count('g'), d.count('t') ]
+  end
+end

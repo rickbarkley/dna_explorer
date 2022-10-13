@@ -1,0 +1,13 @@
+<p style="color: green"><%= notice %></p>
+	<h1>Dna codes</h1>
+
+	<div id="dna_codes">
+	  <% @dna_codes.each do |dna_code| %>
+	    <%= render dna_code %>
+	    <p>
+	      <%= link_to "Show this dna code", dna_code %>
+	    </p>
+	  <% end %>
+	</div>
+
+	<%= link_to "New dna code", new_dna_code_path %>

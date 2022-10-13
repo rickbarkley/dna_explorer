@@ -1,0 +1,62 @@
+<p style="color: green"><%= notice %></p>
+
+
+<form>
+  <label><b>Number of base pairs</b></label><br />
+  <%= text_field_tag :base_pairs, params[:base_pairs] %>
+  <%= submit_tag 'Submit', :name => nil, class: "btn btn-dark btn-sm" %>
+
+</form>
+
+<p class="text-end">
+	<%=
+	  link_to 'Download as Excel',
+	  params.permit(:base_pairs).merge(format: :xlsx), class: "btn btn-dark btn-sm"
+	%>
+</p>
+
+<br />
+<div class="container">
+	<div class="row">
+		<div class="col col-md-6">
+		  <%= render @dna_code %>
+		</div>
+		<div class="col col-md-6">
+		  <% unless @dna_array.blank? %>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>seq</th>
+						<th>A</th>
+						<th>C</th>
+						<th>G</th>
+						<th>T</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% @dna_array.each do |d| %>
+						<tr>
+							<td><%= d %></td>
+							<td><%= d.count('a') %></td>
+							<td><%= d.count('c') %></td>
+							<td><%= d.count('g') %></td>
+							<td><%= d.count('t') %></td>
+						</tr>
+					<% end %>
+				</tbody>
+			</table>
+		  <% end %>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+<div>
+  <%= link_to "Edit this dna code", edit_dna_code_path(@dna_code) %> |
+  <%= link_to "Back to dna codes", dna_codes_path %>
+
+  <%= button_to "Destroy this dna code", @dna_code, method: :delete %>
+</div>
