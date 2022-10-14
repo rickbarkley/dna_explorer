@@ -21,8 +21,10 @@
   </div>
 
   <div>
-    <%= form.label :account_id, style: "display: block" %>
-    <%= form.number_field :account_id, class: "form-control" %>
+    <% options = options_from_collection_for_select(Profile.all, 'account_id', 'name') %>
+    
+    <%= form.label :account_id, "Patient", style: "display: block" %>
+    <%= form.select :all_val,  options, class: "form-control" %>
   </div>
 
 
