@@ -1,6 +1,6 @@
 <p style="color: green"><%= notice %></p>
 
-
+<h3>Gene: <%= !@dna_code.gene_name.nil? ? @dna_code.gene_name : "Undefined" %></h3>
 <form>
   <label><b>Number of base pairs</b></label><br />
   <%= text_field_tag :base_pairs, params[:base_pairs] %>
@@ -13,6 +13,7 @@
 	  link_to 'Download as Excel',
 	  params.permit(:base_pairs).merge(format: :xlsx), class: "btn btn-dark btn-sm"
 	%>
+	<%= link_to "Back", dna_codes_path, class: "btn btn-light btn-sm" %>
 </p>
 
 <br />
@@ -55,8 +56,6 @@
 
 
 <div>
-  <%= link_to "Edit this dna code", edit_dna_code_path(@dna_code) %> |
-  <%= link_to "Back to dna codes", dna_codes_path %>
+  
 
-  <%= button_to "Destroy this dna code", @dna_code, method: :delete %>
 </div>

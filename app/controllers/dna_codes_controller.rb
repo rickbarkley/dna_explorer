@@ -69,6 +69,6 @@ class DnaCodesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def dna_code_params
-      params.require(:dna_code).permit(:raw, :account_id, :entity_id, :base_pairs, :id)
+      params.require(:dna_code).permit(:raw, :account_id, :entity_id, :base_pairs, :gene_name)
     end
 end

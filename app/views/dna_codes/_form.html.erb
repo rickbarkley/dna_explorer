@@ -12,6 +12,10 @@
   <% end %>
 
   <div>
+    <%= form.label :gene_name, style: "display: block"%>
+    <%= form.text_field :gene_name,  class: "form-control" %>
+  </div>
+  <div>
     <%= form.label :raw, style: "display: block" %>
     <%= form.text_area :raw, class: "form-control" %>
   </div>
@@ -21,10 +25,7 @@
     <%= form.number_field :account_id, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :entity_id, style: "display: block"%>
-    <%= form.number_field :entity_id,  class: "form-control" %>
-  </div>
+
 
   <div>
     <%= form.submit class: "btn btn-dark btn-sm mt-3" %>

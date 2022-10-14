@@ -1,13 +1,31 @@
 <p style="color: green"><%= notice %></p>
-	<h1>Dna codes</h1>
+	<h1>DNA Sequences</h1>
 
 	<div id="dna_codes">
-	  <% @dna_codes.each do |dna_code| %>
-	    <%= render dna_code %>
-	    <p>
-	      <%= link_to "Show this dna code", dna_code %>
-	    </p>
+	  <table class="table">
+	  	<thead>
+	  		<tr>
+	  			<th>Gene</th>
+	  			<th>Patient</th>
+	  			<th>Created At</th>
+	  			<th>Actions</th>
+	  		</tr>
+	  	</thead>
+	  	<tbody>
+		  <% @dna_codes.each do |dna_code| %>
+	    	<tr>
+	    		<td><%= link_to dna_code.gene_name, dna_code %></td>
+	    		<td><%=dna_code.account.profile.name%></td>
+	    		<td><%= dna_code.created_at %></td>
+	    		<td>
+	    			<%= link_to "Edit", edit_dna_code_path(dna_code) %> |
+  					<%= link_to "Delete", @dna_code, method: :delete %>
+	    		</td>
+	    	</tr>
 	  <% end %>
+	  	</tbody>
+	  </table>
+
 	</div>
 
-	<%= link_to "New dna code", new_dna_code_path %>
+	<%= link_to "New dna sequence", new_dna_code_path %>
