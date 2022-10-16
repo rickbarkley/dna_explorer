@@ -9,9 +9,10 @@ class DnaCodesController < ApplicationController
 
   # GET /dna_codes/1
   def show
-    base_pairs = params[:base_pairs]
-    unless base_pairs.blank?
-      end_range = base_pairs.to_i - 1
+    @base_pairs = params[:base_pairs]&.to_i
+
+    unless @base_pairs.blank?
+      end_range = @base_pairs - 1
       @dna_array = @dna_code.raw.chars.each_with_index.map { |v,i| @dna_code.raw[i..i+end_range] }
     end
       respond_to do |format|
