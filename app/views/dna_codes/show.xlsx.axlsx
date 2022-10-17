@@ -2,7 +2,7 @@ wb = xlsx_package.workbook
 
 wb.add_worksheet(name: "DNA") do |sheet|
   # Create the header row
-  sheet.add_row ["Gene", "Section", "Seq", "A-#", "A-%", "# poly A", "C-#", "C-%", "# poly C",  "G-#", "G-%", "# poly G", "T-#", "T-%", "# poly T"]
+  sheet.add_row ["Gene", "Section", "Seq", "A-#", "A-%", "# poly A", "C-#", "C-%", "# poly C",  "G-#", "G-%", "# poly G", "T-#", "T-%", "# poly T", "g-free", "tox_eq"]
   # Create entries for each item
   count = 0
   @dna_array.each do |d|
@@ -15,7 +15,9 @@ wb.add_worksheet(name: "DNA") do |sheet|
   	cc = d.scan(/(?=#{'cccc'})/).count
   	gg = d.scan(/(?=#{'gggg'})/).count
   	tt = d.scan(/(?=#{'tttt'})/).count
+  	gfree = d.split("g").last.length
+
   	total = @base_pairs
-    sheet.add_row [@dna_code.gene_name, count.to_s + " - " + (count + 17).to_s, d, a, number_to_percentage(((a/total&.to_f)*100)), aa, c, number_to_percentage(((c/total&.to_f)*100)), cc, g, number_to_percentage(((g/total&.to_f)*100)), gg, t, number_to_percentage(((t/total&.to_f)*100)), tt ]
+    sheet.add_row [@dna_code.gene_name, count.to_s + " - " + (count + 17).to_s, d, a, number_to_percentage(((a/total&.to_f)*100)), aa, c, number_to_percentage(((c/total&.to_f)*100)), cc, g, number_to_percentage(((g/total&.to_f)*100)), gg, t, number_to_percentage(((t/total&.to_f)*100)), tt, gfree, "a" ]
   end
 end
