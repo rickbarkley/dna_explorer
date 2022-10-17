@@ -2,22 +2,36 @@ wb = xlsx_package.workbook
 
 wb.add_worksheet(name: "DNA") do |sheet|
   # Create the header row
-  sheet.add_row ["Gene", "Section", "Seq", "A-#", "A-%", "# poly A", "C-#", "C-%", "# poly C",  "G-#", "G-%", "# poly G", "T-#", "T-%", "# poly T", "g-free", "tox_eq"]
+  sheet.add_row ["Gene", "Section", "Sense Seq", "Antisense Seq", "A-#", "A-%", "# poly A", "C-#", "C-%", "# poly C",  "G-#", "G-%", "# poly G", "T-#", "T-%", "# poly T", "g-free", "tox_eq"]
   # Create entries for each item
   count = 0
   @dna_array.each do |d|
-  count = count + 1
-  	a = d.count('a')
-  	c = d.count('c')
-  	g = d.count('g')
-  	t = d.count('t')
-  	aa = d.scan(/(?=#{'aaaa'})/).count
-  	cc = d.scan(/(?=#{'cccc'})/).count
-  	gg = d.scan(/(?=#{'gggg'})/).count
-  	tt = d.scan(/(?=#{'tttt'})/).count
-  	gfree = d.split("g").last.length
+	sense_string = d
+	anti_sense_string = d.reverse
+	anti_sense_string = anti_sense_string.gsub("a", "1")
+	anti_sense_string = anti_sense_string.gsub("t", "a")
+	anti_sense_string = anti_sense_string.gsub("1", "t")
 
-  	total = @base_pairs
-    sheet.add_row [@dna_code.gene_name, count.to_s + " - " + (count + 17).to_s, d, a, number_to_percentage(((a/total&.to_f)*100)), aa, c, number_to_percentage(((c/total&.to_f)*100)), cc, g, number_to_percentage(((g/total&.to_f)*100)), gg, t, number_to_percentage(((t/total&.to_f)*100)), tt, gfree, "a" ]
+	anti_sense_string = anti_sense_string.gsub("c", "2")
+	anti_sense_string = anti_sense_string.gsub("g", "c")
+	anti_sense_string = anti_sense_string.gsub("2", "g")
+	d = anti_sense_string
+
+	count = count + 1
+	a = d.count('a')
+	c = d.count('c')
+	g = d.count('g')
+	t = d.count('t')
+	aa = d.scan(/(?=#{'aaaa'})/).count
+	cc = d.scan(/(?=#{'cccc'})/).count
+	gg = d.scan(/(?=#{'gggg'})/).count
+	tt = d.scan(/(?=#{'tttt'})/).count
+	gfree = d.last == "g" ? 0 : d.split("g").last.length
+
+	eq = ((136.0430 - 3.1263*a - 5.1100*c - 4.7217*t - 10.1264*g + 1.3577*gfree).to_f).round(2)
+
+
+	total = @base_pairs
+	sheet.add_row [@dna_code.gene_name, count.to_s + " - " + (count + 17).to_s, sense_string, d, a, number_to_percentage(((a/total&.to_f)*100)), aa, c, number_to_percentage(((c/total&.to_f)*100)), cc, g, number_to_percentage(((g/total&.to_f)*100)), gg, t, number_to_percentage(((t/total&.to_f)*100)), tt, gfree, eq ]
   end
 end
